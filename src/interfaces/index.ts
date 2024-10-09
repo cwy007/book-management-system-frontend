@@ -12,3 +12,9 @@ export const register = async (username: string, password: string) => {
 export const login = async (username: string, password: string) => {
   return await axiosInstance.post('/user/login', { username, password });
 }
+
+export const bookListSvc = async (name: string) => {
+  return await axiosInstance.get('/book/list', {
+    params: { name }
+  });
+}

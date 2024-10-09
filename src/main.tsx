@@ -3,6 +3,7 @@ import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-d
 import Login from './pages/Login';
 import Register from './pages/Register';
 import BookManage from './pages/BookManage';
+import "./index.css";
 
 const routes: RouteObject[] = [
   {
