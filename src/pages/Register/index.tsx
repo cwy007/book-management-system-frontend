@@ -1,5 +1,6 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import "./index.css";
+import { register } from "../../interfaces";
 
 const FormItem = Form.Item;
 const { Password } = Input;
@@ -10,8 +11,28 @@ interface RegisterUser {
   password2: string;
 }
 
-const onFinish = (values: RegisterUser) => {
-  console.log(values);
+const onFinish = async (values: RegisterUser) => {
+  console.log("values", values);
+
+  if (values.password !== values.password2) {
+    message.error("两次密码不一致");
+    return;
+  }
+
+  try {
+    const res = await register(values.username, values.password);
+
+    if (res.status === 201 || res.status === 200) {
+      message.success("注册成功");
+
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
+    }
+  } catch (axiosError: any) {
+    console.log('axiosError-->', axiosError)
+    message.error(axiosError.response.data.message);
+  }
 };
 
 const layout1 = {
