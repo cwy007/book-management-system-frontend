@@ -79,9 +79,9 @@ function BookManage() {
                 cover={
                   <img
                     alt="example"
-                    src="https://file.ituring.com.cn/LargeCover/240360d61611dc18b25c"
+                    // src="https://file.ituring.com.cn/LargeCover/240360d61611dc18b25c"
                     // TODO
-                    // src={`http://localhost:3000/${book.cover}`}
+                    src={`http://localhost:3000/${book.cover}`}
                   />
                 }
               >
