@@ -2,6 +2,7 @@ import { Button, Card, Form, Input, message, Space } from "antd";
 import "./index.css";
 import { useEffect, useState } from "react";
 import { bookListSvc } from "../../interfaces";
+import { CreateBookModal } from "./CreateBookModal";
 
 interface Book {
   id: number;
@@ -14,6 +15,7 @@ interface Book {
 function BookManage() {
   const [bookList, setBookList] = useState<Array<Book>>([]);
   const [name, setName] = useState("");
+  const [isCreateBookModalOpen, setCraeteBookModalOpen] = useState(false);
 
   async function fetchData() {
     try {
@@ -58,6 +60,7 @@ function BookManage() {
                   type="primary"
                   htmlType="submit"
                   style={{ background: "green" }}
+                  onClick={() => setCraeteBookModalOpen(true)}
                 >
                   添加图书
                 </Button>
@@ -94,6 +97,15 @@ function BookManage() {
           })}
         </div>
       </div>
+
+      <CreateBookModal
+        isOpen={isCreateBookModalOpen}
+        handleClose={() => {
+          setCraeteBookModalOpen(false);
+          // setName(''); // 刷新页面
+          window.location.reload(); // 刷新页面
+        }}
+      />
     </div>
   );
 }
