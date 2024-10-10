@@ -65,7 +65,7 @@ function BookManage() {
             colon={false}
           >
             <Form.Item label="图书名称" name="name">
-              <Input />
+              <Input allowClear />
             </Form.Item>
             <Form.Item label=" ">
               <Space size={8}>
