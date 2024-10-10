@@ -3,8 +3,8 @@ import { message } from "antd";
 import Dragger from "antd/es/upload/Dragger";
 
 interface CoverUploadProps {
-  value: string;
-  onChange: Function;
+  value?: string;
+  onChange?: Function;
 }
 
 // 自定义formItem 控件
@@ -29,7 +29,9 @@ const CoverUpload = ({ value, onChange }: CoverUploadProps) => {
           const { status } = info.file;
           if (status === "done") {
             // info.file.response // 上传接口返回 "uploads/1728542922047-57u27k-1 09.41.00 (1).png"
-            onChange(info.file.response);
+            if (typeof onChange === 'function') {
+              onChange(info.file.response);
+            }
             message.success(`${info.file.name} 文件上传成功`);
           } else if (status === "error") {
             message.error(`${info.file.name} 文件上传失败`);

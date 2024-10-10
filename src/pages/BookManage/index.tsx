@@ -3,6 +3,7 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { bookListSvc } from "../../interfaces";
 import { CreateBookModal } from "./CreateBookModal";
+import UpdateBookModal from "./UpdateBookModal";
 
 interface Book {
   id: number;
@@ -16,6 +17,8 @@ function BookManage() {
   const [bookList, setBookList] = useState<Array<Book>>([]);
   const [name, setName] = useState("");
   const [isCreateBookModalOpen, setCraeteBookModalOpen] = useState(false);
+  const [isUpdateBookModalOpen, setUpdateBookModalOpen] = useState(false);
+  const [updateId, setUpdateId] = useState(0);
 
   async function fetchData() {
     try {
@@ -89,8 +92,19 @@ function BookManage() {
                 <div>{book.author}</div>
                 <div className="links">
                   <a href="#">详情</a>
-                  <a href="#">编辑</a>
-                  <a href="#">删除</a>
+                  <a
+                    href="#"
+                    onClick={() => {
+                      setUpdateId(book.id);
+                      setUpdateBookModalOpen(true);
+                    }}
+                  >
+                    编辑
+                  </a>
+                  <a
+                    href="#"
+                    // onClick={() => setUpdateId(book.id)}
+                  >删除</a>
                 </div>
               </Card>
             );
@@ -104,6 +118,15 @@ function BookManage() {
           setCraeteBookModalOpen(false);
           // setName(''); // 刷新页面
           window.location.reload(); // 刷新页面
+        }}
+      />
+
+      <UpdateBookModal
+        id={updateId}
+        isOpen={isUpdateBookModalOpen}
+        handleClose={() => {
+          setUpdateBookModalOpen(false);
+          window.location.reload();
         }}
       />
     </div>
