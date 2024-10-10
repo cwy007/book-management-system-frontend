@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { bookListSvc } from "../../interfaces";
 import { CreateBookModal } from "./CreateBookModal";
 import UpdateBookModal from "./UpdateBookModal";
+import BookDetailModal from "./BookDetailModal";
 
-interface Book {
+export interface Book {
   id: number;
   name: string;
   author: string;
@@ -18,7 +19,9 @@ function BookManage() {
   const [name, setName] = useState("");
   const [isCreateBookModalOpen, setCraeteBookModalOpen] = useState(false);
   const [isUpdateBookModalOpen, setUpdateBookModalOpen] = useState(false);
+  const [isBookDetailModalOpen, setBookDetailModalOpen] = useState(false);
   const [updateId, setUpdateId] = useState(0);
+  const [timestamp, setTimestamp] = useState(0);
 
   async function fetchData() {
     try {
@@ -34,7 +37,7 @@ function BookManage() {
 
   useEffect(() => {
     fetchData();
-  }, [name]);
+  }, [name, timestamp]);
 
   async function searchBook(values: { name: string }) {
     setName(values.name);
@@ -91,7 +94,15 @@ function BookManage() {
                 <h2>{book.name}</h2>
                 <div>{book.author}</div>
                 <div className="links">
-                  <a href="#">详情</a>
+                  <a
+                    href="#"
+                    onClick={() => {
+                      setUpdateId(book.id);
+                      setBookDetailModalOpen(true);
+                    }}
+                  >
+                    详情
+                  </a>
                   <a
                     href="#"
                     onClick={() => {
@@ -117,7 +128,8 @@ function BookManage() {
         handleClose={() => {
           setCraeteBookModalOpen(false);
           // setName(''); // 刷新页面
-          window.location.reload(); // 刷新页面
+          // window.location.reload(); // 刷新页面
+          setTimestamp(Date.now())
         }}
       />
 
@@ -126,7 +138,15 @@ function BookManage() {
         isOpen={isUpdateBookModalOpen}
         handleClose={() => {
           setUpdateBookModalOpen(false);
-          window.location.reload();
+          setTimestamp(Date.now());
+        }}
+      />
+
+      <BookDetailModal
+        id={updateId}
+        isOpen={isBookDetailModalOpen}
+        handleClose={() => {
+          setBookDetailModalOpen(false);
         }}
       />
     </div>
