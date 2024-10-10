@@ -43,3 +43,7 @@ export async function bookUpdateSvc(book: UpdateBook) {
     cover: book.cover
   });
 }
+
+export async function deleteBookSvc(id: number) {
+  return await axiosInstance.delete(`/book/delete/${id}`);
+}

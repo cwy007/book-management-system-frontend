@@ -54,6 +54,7 @@ const BookDetailModal = ({ id, isOpen, handleClose }: BookDetailModalProps) => {
           <img
             alt="example"
             src={`http://localhost:3000/${detail?.cover}`}
+            style={{ maxWidth: '100%' }}
           />
         </Form.Item>
       </Form>

@@ -1,7 +1,7 @@
-import { Button, Card, Form, Input, message, Space } from "antd";
+import { Button, Card, Form, Input, message, Popconfirm, Space } from "antd";
 import "./index.css";
 import { useEffect, useState } from "react";
-import { bookListSvc } from "../../interfaces";
+import { bookListSvc, deleteBookSvc } from "../../interfaces";
 import { CreateBookModal } from "./CreateBookModal";
 import UpdateBookModal from "./UpdateBookModal";
 import BookDetailModal from "./BookDetailModal";
@@ -41,6 +41,16 @@ function BookManage() {
 
   async function searchBook(values: { name: string }) {
     setName(values.name);
+  }
+
+  async function handleDelete(id: number) {
+    try {
+      await deleteBookSvc(id);
+      message.success("删除成功");
+      setTimestamp(Date.now());
+    } catch (e: any) {
+      message.error(e.response.data.message);
+    }
   }
 
   return (
@@ -112,10 +122,15 @@ function BookManage() {
                   >
                     编辑
                   </a>
-                  <a
-                    href="#"
-                    // onClick={() => setUpdateId(book.id)}
-                  >删除</a>
+                  <Popconfirm
+                    title="图书删除"
+                    description="确认删除吗？"
+                    onConfirm={() => handleDelete(book.id)}
+                    okText="确认"
+                    cancelText="取消"
+                  >
+                    <a href="#">删除</a>
+                  </Popconfirm>
                 </div>
               </Card>
             );
@@ -129,7 +144,7 @@ function BookManage() {
           setCraeteBookModalOpen(false);
           // setName(''); // 刷新页面
           // window.location.reload(); // 刷新页面
-          setTimestamp(Date.now())
+          setTimestamp(Date.now());
         }}
       />
 
